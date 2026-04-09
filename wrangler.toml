@@ -1,1 +1,61 @@
+name = "cloudflare_temp_email"
+main = "src/worker.ts"
+compatibility_date = "2025-04-01"
+compatibility_flags = [ "nodejs_compat" ]
 
+[vars]
+DEFAULT_LANG = "zh"
+TITLE = "临时邮箱"
+ANNOUNCEMENT = ""
+PREFIX = "tmp"
+ADDRESS_CHECK_REGEX = "^(?!.*admin).*"
+ADDRESS_REGEX = "[^a-z0-9.-]"
+MIN_ADDRESS_LEN = 4
+MAX_ADDRESS_LEN = 20
+ADMIN_PASSWORDS = ["admin123456"]
+DISABLE_ADMIN_PASSWORD_CHECK = false
+ADMIN_CONTACT = "admin@tingliang92.com"
+DEFAULT_DOMAINS = ["tingliang92.com"]
+DOMAINS = ["tingliang92.com"]
+USER_DEFAULT_ROLE = "vip"
+ADMIN_USER_ROLE = "admin"
+USER_ROLES = [
+   { domains = ["tingliang92.com"], role = "vip", prefix = "" },
+   { domains = ["tingliang92.com"], role = "admin", prefix = "" },
+]
+JWT_SECRET = "tingliang92-super-secret-key-change-this-to-random-string-123456789"
+BLACK_LIST = "gov.cn,edu.cn"
+ENABLE_USER_CREATE_EMAIL = true
+DISABLE_ANONYMOUS_USER_CREATE_EMAIL = false
+ENABLE_USER_DELETE_EMAIL = true
+ENABLE_AUTO_REPLY = false
+ENABLE_WEBHOOK = false
+COPYRIGHT = ""
+DISABLE_SHOW_GITHUB = false
+DEFAULT_SEND_BALANCE = 2
+NO_LIMIT_SEND_ROLE = "admin"
+TG_MAX_ADDRESS = 5
+FRONTEND_URL = "https://mail.tingliang92.com"
+ENABLE_CHECK_JUNK_MAIL = true
+JUNK_MAIL_FORCE_PASS_LIST = ["spf", "dkim", "dmarc"]
+REMOVE_EXCEED_SIZE_ATTACHMENT = true
+REMOVE_ALL_ATTACHMENT = false
+
+[[d1_databases]]
+binding = "DB"
+database_name = "tempmail"
+database_id = "c244d335-a6aa-4368-99ee-6dcc1e4e88a3"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "801fd7402b9547c5acdea74ff5aed601"
+
+send_email = [
+   { name = "SEND_MAIL" },
+]
+
+[[unsafe.bindings]]
+name = "RATE_LIMITER"
+type = "ratelimit"
+namespace_id = "1001"
+simple = { limit = 10, period = 60 }
